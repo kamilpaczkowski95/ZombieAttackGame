@@ -28,7 +28,19 @@ Bibliografia:
 - python.rk.edu.pl
 - youtube.com
 
+
+
 6 TYGODNIOWY PLAN:
+
+1 tydzień: pierwszy tydzień i pierwsze 10 zmian (commit) poświęcone przygotowaniu dokładnego opisu mojej gry, charakterystyki,            technologii, zarówno w języku polskim jak i angielskim.
+
+2 tydzień (Commit 11,12,13) od 4 marca 2017 roku: dobór odpowiednich bibliotek, dodanie podstawowych zmiennych, zainicjowanie newKindZombies, stworzenie ekranu tytułowego, przygotowanie grafiki gry oraz stworów.
+
+3 tydzień: (Commit 14,15,16): przygotowanie i wprowadzenie odpowiednich czcionek, umieszczenie grafiki w kodzie, umieszczenie dźwięku, dodawanie nowych zombie, wprowadzenie usuwanie poległych, wyświetlanie danych na ekranie głównym.
+
+4 tydzień: (Commit 17,18,19): dodanie strzelania, polepszenie ruchu postaci i zombie oraz ogólnej fabuły, stworzenie ekranu koncowego oraz zakończenia gry.
+
+5 tydzień: (Commit 20): końcowe poprawki, dopracowanie gry, zamknięcie projektu.
 
 ----------------------------------------------------------------------------------------------------------------------------
 
