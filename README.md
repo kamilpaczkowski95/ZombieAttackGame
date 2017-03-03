@@ -23,7 +23,13 @@ TECHNOLOGIA
 
 
 Bibliografia:
-http://www.python.rk.edu.pl
+- Make Games with Pytohn -Sean. M. Tracey
+- Beginning Game Development with Python and Pygame Will McGugan
+- python.rk.edu.pl
+- youtube.com
+
+6 TYGODNIOWY PLAN:
+
 ----------------------------------------------------------------------------------------------------------------------------
 
 ################  ENG
