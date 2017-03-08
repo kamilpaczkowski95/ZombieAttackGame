@@ -38,3 +38,28 @@ def waitForPlayerToPressKey():
                     terminate()
                 if event.key == K_RETURN:
                     return
+def playerHasHitZombie(playerRect, zombies):
+    for z in zombies:
+        if playerRect.colliderect(z['rect']):
+            return True
+    return False
+
+def bulletHasHitZombie(bullets, zombies):
+    for b in bullets:
+        if b['rect'].colliderect(z['rect']):
+            bullets.remove(b)
+            return True
+    return False
+
+def bulletHasHitCrawler(bullets, newKindZombies):
+    for b in bullets:
+        if b['rect'].colliderect(c['rect']):
+            bullets.remove(b)
+            return True
+    return False
+
+def drawText(text, font, surface, x, y):
+    textobj = font.render(text, 1, TEXTCOLOR)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
