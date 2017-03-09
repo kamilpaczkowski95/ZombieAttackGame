@@ -45,3 +45,23 @@ Bibliografia:
 ----------------------------------------------------------------------------------------------------------------------------
 
 ################  ENG
+
+In this documentation I would like show in general, what is my game Zombie Attack about, what will be its assumptions and what are the main points and what is the purpose of this game.
+First of all Zombie Attack is dedicated for people with good manual skills with nerves of steel who are hardworking and with mobilization to keep beating new records.
+The main thread will be Apocalypse of zombies, monsters and other creatures as well as the fight against us, as a single hero trying to defend the world from destruction. We should strive for killing as many monsters as possible, and try to reach the highest number of points by transforming into brave soldier. Character (the player) will have to come to therms with the fact that the number of zombies will increase and the difficulty level will become increasingly higher in each second. The game is created by me by using Python. The general sketch will looks as follows:
+
+X- our hero, Y- weaker zombie, Z- strong zombie
+
+Analyzing this sketch we can see that the hero is attacked by two kinds of creatures: Y- weaker and slower zombies and Z- faster and more powerful zombies. For killing each of them we will receive points which during the game will be added together and sum up. The main objective is to achive as many of them as possible. It's worth to add, that with every second, the game will be more difficult by a larger crowd of zombies who will multiply much faster and also move faster. In addiction, the shooting mutant plants will be introduced to the game, as in the image below. Note: if your game line exceeds more than 10  creatures, we die.
+ The atmosphere of the game will be created by moody, gloomy music and proper landscape (probably forest). Artwork will be made probably in Gimp or Photoshop, based on the designs of the other well known and popular games.
+
+TECHNOLOGY
+Zombie Attack is created by me in high level of programming language, namely by Python. Main reason for choosing this one, not the other, was primarily the fact that this is my favourite language in which I find myself the best. In addiction, I decided to use the popular, but at the same time very effective pyGame library, which is the collection of Phytons modules to create online games using SDL libraries; pyGame works on multiple operating systems and multiple architectures. Phyton uses many brands such as:  Google, Yahoo, Nokia, IBM or NASA to their worth many millions dollars applications and projects. Microsoft and Apple offer full support for Phyton in their operating systems and development platforms. Many websites such as YouTube is written in Python. Games and applications that use 3D technology you can create using Python. A common solution is to share in Phyton API game engine written in C/C++. In Phyton, we have access to several engines to support 3D graphics, 2D and other components needed for his type of application- PyGame, PyCrystal (API na CrystalSpace), Python-Ogre (API na Ogre 3D), pyopengl (API na OpenGL).
+I will base strictly on Phyton, without combining into this other related programming languages.
+
+
+Bibliograpgy:
+- Make Games with Pytohn -Sean. M. Tracey
+- Beginning Game Development with Python and Pygame Will McGugan
+- python.rk.edu.pl
+- youtube.com
