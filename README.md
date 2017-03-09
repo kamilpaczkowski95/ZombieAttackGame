@@ -60,7 +60,7 @@ Zombie Attack is created by me in high level of programming language, namely by 
 I will base strictly on Phyton, without combining into this other related programming languages.
 
 
-Bibliograpgy:
+Bibliography:
 - Make Games with Pytohn -Sean. M. Tracey
 - Beginning Game Development with Python and Pygame Will McGugan
 - python.rk.edu.pl
