@@ -71,6 +71,13 @@ windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))#, pygame.FU
 pygame.display.set_caption('Zombie Attack by KamilP95')
 pygame.mouse.set_visible(False)
 
+####### zmiana naboi po trafieniu w zoombie.
+        for z in zombies:
+            if bulletHasHitZombie(bullets, zombies):
+                score += 1
+                zombies.remove(z)
+    
+
 #####################
  # stop gry i ukazanie napisalu Game Over.
     pygame.mixer.music.stop()
