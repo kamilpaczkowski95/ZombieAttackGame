@@ -70,3 +70,28 @@ mainClock = pygame.time.Clock()
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))#, pygame.FULLSCREEN)
 pygame.display.set_caption('Zombie Attack by KamilP95')
 pygame.mouse.set_visible(False)
+
+#####################
+ # stop gry i ukazanie napisalu Game Over.
+    pygame.mixer.music.stop()
+    gameOverSound.play()
+    time.sleep(1)
+    if zombiesGottenPast >= MAXGOTTENPASS:
+        windowSurface.blit(rescaledBackground, (0, 0))
+        windowSurface.blit(playerImage, (WINDOWWIDTH / 2, WINDOWHEIGHT - 70))
+        drawText('Wynik: %s' % (score), font, windowSurface, 10, 30)
+        drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
+        drawText('ODNIOSLES KLESKE, ZOSTALES ZNISZCZONY!', font, windowSurface, (WINDOWWIDTH / 4)- 80, (WINDOWHEIGHT / 3) + 100)
+        drawText('Wcisnij Enter, jesli chcesz grac dalej lub Escape, jesli sie poddajesz!', font, windowSurface, (WINDOWWIDTH / 4) - 80, (WINDOWHEIGHT / 3) + 150)
+        pygame.display.update()
+        waitForPlayerToPressKey()
+    if playerHasHitZombie(playerRect, zombies):
+        windowSurface.blit(rescaledBackground, (0, 0))
+        windowSurface.blit(playerImage, (WINDOWWIDTH / 2, WINDOWHEIGHT - 70))
+        drawText('Wynik: %s' % (score), font, windowSurface, 10, 30)
+        drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
+        drawText('ZOSTALES UKASZONY PRZEZ ZOOMBIE', font, windowSurface, (WINDOWWIDTH / 4) - 80, (WINDOWHEIGHT / 3) +100)
+        drawText('Wcisnij Enter, jesli chcesz grac dalej lub Escape, jesli sie poddajesz!', font, windowSurface, (WINDOWWIDTH / 4) - 80, (WINDOWHEIGHT / 3) + 150)
+        pygame.display.update()
+        waitForPlayerToPressKey()
+    gameOverSound.stop()
