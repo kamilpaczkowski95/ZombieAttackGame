@@ -76,6 +76,28 @@ pygame.mouse.set_visible(False)
             if bulletHasHitZombie(bullets, zombies):
                 score += 1
                 zombies.remove(z)
+              
+ ###################
+ # dodanie nowych zombie (jesli to potrzebne) do glownego obrazu
+        zombieAddCounter += 1
+        if zombieAddCounter == ADDNEWKINDZOMBIE:
+            zombieAddCounter = 0
+            zombieSize = ZOMBIESIZE       
+            newZombie = {'rect': pygame.Rect(WINDOWWIDTH, random.randint(10,WINDOWHEIGHT-zombieSize-10), zombieSize, zombieSize),
+                        'surface':pygame.transform.scale(zombieImage, (zombieSize, zombieSize)),
+                        }
+
+            zombies.append(newZombie)
+
+        # dodanie nowych - newKindZombies do głownego obrazu, jeśli jest to potrzebne
+        newKindZombieAddCounter += 1
+        if newKindZombieAddCounter == ADDNEWZOMBIERATE:
+            newKindZombieAddCounter = 0
+            newKindZombiesize = ZOMBIESIZE
+            newCrawler = {'rect': pygame.Rect(WINDOWWIDTH, random.randint(10,WINDOWHEIGHT-newKindZombiesize-10), newKindZombiesize, newKindZombiesize),
+                        'surface':pygame.transform.scale(newKindZombieImage, (newKindZombiesize, newKindZombiesize)),
+                        }
+            newKindZombies.append(newCrawler)
     
 
 #####################
