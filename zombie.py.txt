@@ -99,7 +99,29 @@ pygame.mouse.set_visible(False)
                         }
             newKindZombies.append(newCrawler)
     
+  # stwórz obraz gry w oknie. 
+        windowSurface.blit(rescaledBackground, (0, 0))
 
+        # panel gracza.
+        windowSurface.blit(playerImage, playerRect)
+
+        # stworzenie "czarnego charakteru"
+        for z in zombies:
+            windowSurface.blit(z['surface'], z['rect'])
+
+        for c in newKindZombies:
+            windowSurface.blit(c['surface'], c['rect'])
+
+        # każdy rodzaj naboju.
+        for b in bullets:
+            windowSurface.blit(b['surface'], b['rect'])
+
+        # stworzenie wyniku oraz ilości poległych zoombie
+        drawText('Zoombie, z którymi się uporałeś: %s' % (zombiesGottenPast), font, windowSurface, 10, 20)
+        drawText('Wynik: %s' % (score), font, windowSurface, 10, 50)
+
+        # aktualizacje
+        pygame.display.update()
 #####################
  # stop gry i ukazanie napisalu Game Over.
     pygame.mixer.music.stop()
