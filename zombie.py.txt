@@ -71,6 +71,26 @@ windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))#, pygame.FU
 pygame.display.set_caption('Zombie Attack by KamilP95')
 pygame.mouse.set_visible(False)
 
+# wlasciwosci czcionki
+font = pygame.font.SysFont(None, 48)
+
+# wlasciwosci dzwieku
+gameOverSound = pygame.mixer.Sound('gameover.wav')
+pygame.mixer.music.load('grasswalk.mp3')
+
+# wlascicowsci obrazków
+playerImage = pygame.image.load('SnowPea.gif')
+playerRect = playerImage.get_rect()
+
+bulletImage = pygame.image.load('SnowPeashooterBullet.gif')
+bulletRect = bulletImage.get_rect()
+
+zombieImage = pygame.image.load('tree.png')
+newKindZombieImage = pygame.image.load('ConeheadZombieAttack.gif')
+
+backgroundImage = pygame.image.load('background.png')
+rescaledBackground = pygame.transform.scale(backgroundImage, (WINDOWWIDTH, WINDOWHEIGHT))
+
 ####### zmiana naboi po trafieniu w zoombie.
         for z in zombies:
             if bulletHasHitZombie(bullets, zombies):
