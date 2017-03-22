@@ -109,6 +109,15 @@ rescaledBackground = pygame.transform.scale(backgroundImage, (WINDOWWIDTH, WINDO
 
             zombies.append(newZombie)
 
+# dodanie nowej amunicji
+        bulletAddCounter += 1
+        if bulletAddCounter >= ADDNEWBULLETRATE and shoot == True:
+            bulletAddCounter = 0
+            newBullet = {'rect':pygame.Rect(playerRect.centerx+10, playerRect.centery-25, bulletRect.width, bulletRect.height),
+						 'surface':pygame.transform.scale(bulletImage, (bulletRect.width, bulletRect.height)),
+						}
+            bullets.append(newBullet)
+            
         # dodanie nowych - newKindZombies do głownego obrazu, jeśli jest to potrzebne
         newKindZombieAddCounter += 1
         if newKindZombieAddCounter == ADDNEWZOMBIERATE:
