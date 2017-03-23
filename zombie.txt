@@ -91,6 +91,16 @@ newKindZombieImage = pygame.image.load('ConeheadZombieAttack.gif')
 backgroundImage = pygame.image.load('background.png')
 rescaledBackground = pygame.transform.scale(backgroundImage, (WINDOWWIDTH, WINDOWHEIGHT))
 
+
+# ukazanie tytułowego ("Start") ekranu
+windowSurface.blit(rescaledBackground, (0, 0))
+windowSurface.blit(playerImage, (WINDOWWIDTH / 2, WINDOWHEIGHT - 70))
+drawText('Zombie Attack by Kamil Paczkowski', font, windowSurface, (WINDOWWIDTH / 4), (WINDOWHEIGHT / 4))
+drawText('Jeśli jesteś gotów wciśnij Enter!', font, windowSurface, (WINDOWWIDTH / 3) - 10, (WINDOWHEIGHT / 3) + 50)
+pygame.display.update()
+waitForPlayerToPressKey()
+while True:
+
 ####### zmiana naboi po trafieniu w zoombie.
         for z in zombies:
             if bulletHasHitZombie(bullets, zombies):
