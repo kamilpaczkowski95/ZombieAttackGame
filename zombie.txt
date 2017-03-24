@@ -119,6 +119,24 @@ while True:
     newKindZombieAddCounter = 0
     bulletAddCounter = 40
     pygame.mixer.music.play(-1, 0.0)
+    
+    
+    while True: # pętla w poszczególnej partii gry w czasie grania
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+
+            if event.type == KEYDOWN:
+                if event.key == K_UP or event.key == ord('w'):
+                    moveDown = False
+                    moveUp = True
+                if event.key == K_DOWN or event.key == ord('s'):
+                    moveUp = False
+                    moveDown = True
+
+                if event.key == K_SPACE:
+                    shoot = True
+
 
 ####### zmiana naboi po trafieniu w zoombie.
         for z in zombies:
