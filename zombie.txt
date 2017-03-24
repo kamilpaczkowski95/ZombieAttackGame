@@ -101,6 +101,25 @@ pygame.display.update()
 waitForPlayerToPressKey()
 while True:
 
+ # ustawienie początku gry
+
+    zombies = []
+    newKindZombies = []
+    bullets = []
+
+    zombiesGottenPast = 0
+    score = 0
+
+    playerRect.topleft = (50, WINDOWHEIGHT /2)
+    moveLeft = moveRight = False
+    moveUp=moveDown = False
+    shoot = False
+
+    zombieAddCounter = 0
+    newKindZombieAddCounter = 0
+    bulletAddCounter = 40
+    pygame.mixer.music.play(-1, 0.0)
+
 ####### zmiana naboi po trafieniu w zoombie.
         for z in zombies:
             if bulletHasHitZombie(bullets, zombies):
