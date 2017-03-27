@@ -1,0 +1,283 @@
+###               ZOMBIE ATTACK BY KAMILP95                                              ###
+############################################################################################
+
+import pygame, random, sys, time
+from pygame.locals import *
+
+#zainicjowanie podstawowych zmiennych
+WINDOWWIDTH = 1024
+WINDOWHEIGHT = 600
+FPS = 60
+
+MAXGOTTENPASS = 10
+ZOMBIESIZE = 70 #newKindZombies (max. l. zoombie)
+ADDNEWZOMBIERATE = 30
+ADDNEWKINDZOMBIE = ADDNEWZOMBIERATE
+
+NORMALZOMBIESPEED = 2
+NEWKINDZOMBIESPEED = NORMALZOMBIESPEED / 2
+
+PLAYERMOVERATE = 15
+BULLETSPEED = 10
+ADDNEWBULLETRATE = 15
+
+TEXTCOLOR = (255, 255, 255)
+RED = (255, 0, 0)
+
+def terminate():
+    pygame.quit()
+    sys.exit()
+
+def waitForPlayerToPressKey():
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE: # Escape=wyjœcie
+                    terminate()
+                if event.key == K_RETURN:
+                    return
+
+def playerHasHitZombie(playerRect, zombies):
+    for z in zombies:
+        if playerRect.colliderect(z['rect']):
+            return True
+    return False
+
+def bulletHasHitZombie(bullets, zombies):
+    for b in bullets:
+        if b['rect'].colliderect(z['rect']):
+            bullets.remove(b)
+            return True
+    return False
+
+def bulletHasHitCrawler(bullets, newKindZombies):
+    for b in bullets:
+        if b['rect'].colliderect(c['rect']):
+            bullets.remove(b)
+            return True
+    return False
+
+def drawText(text, font, surface, x, y):
+    textobj = font.render(text, 1, TEXTCOLOR)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
+
+# pygame, okno widoku, kursor myszki
+pygame.init()
+mainClock = pygame.time.Clock()
+windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))#, pygame.FULLSCREEN)
+pygame.display.set_caption('Zombie Attack by KamilP95')
+pygame.mouse.set_visible(False)
+
+# wlasciwosci czcionki
+font = pygame.font.SysFont(None, 48)
+
+# wlasciwosci dzwieku
+gameOverSound = pygame.mixer.Sound('gameover.wav')
+pygame.mixer.music.load('grasswalk.mp3')
+
+# wlascicowsci obrazków
+playerImage = pygame.image.load('SnowPea.gif')
+playerRect = playerImage.get_rect()
+
+bulletImage = pygame.image.load('SnowPeashooterBullet.gif')
+bulletRect = bulletImage.get_rect()
+
+zombieImage = pygame.image.load('tree.png')
+newKindZombieImage = pygame.image.load('ConeheadZombieAttack.gif')
+
+backgroundImage = pygame.image.load('background.png')
+rescaledBackground = pygame.transform.scale(backgroundImage, (WINDOWWIDTH, WINDOWHEIGHT))
+
+# ukazanie tytu³owego ("Start") ekranu
+windowSurface.blit(rescaledBackground, (0, 0))
+windowSurface.blit(playerImage, (WINDOWWIDTH / 2, WINDOWHEIGHT - 70))
+drawText('Zombie Attack by Kamil Paczkowski', font, windowSurface, (WINDOWWIDTH / 4), (WINDOWHEIGHT / 4))
+drawText('Jeœli jesteœ gotów wciœnij Enter!', font, windowSurface, (WINDOWWIDTH / 3) - 10, (WINDOWHEIGHT / 3) + 50)
+pygame.display.update()
+waitForPlayerToPressKey()
+while True:
+    # ustawienie pocz¹tku gry
+
+    zombies = []
+    newKindZombies = []
+    bullets = []
+
+    zombiesGottenPast = 0
+    score = 0
+
+    playerRect.topleft = (50, WINDOWHEIGHT /2)
+    moveLeft = moveRight = False
+    moveUp=moveDown = False
+    shoot = False
+
+    zombieAddCounter = 0
+    newKindZombieAddCounter = 0
+    bulletAddCounter = 40
+    pygame.mixer.music.play(-1, 0.0)
+
+    while True: # pêtla w poszczególnej partii gry w czasie grania
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+
+            if event.type == KEYDOWN:
+                if event.key == K_UP or event.key == ord('w'):
+                    moveDown = False
+                    moveUp = True
+                if event.key == K_DOWN or event.key == ord('s'):
+                    moveUp = False
+                    moveDown = True
+
+                if event.key == K_SPACE:
+                    shoot = True
+
+            if event.type == KEYUP:
+                if event.key == K_ESCAPE:
+                        terminate()
+
+                if event.key == K_UP or event.key == ord('w'):
+                    moveUp = False
+                if event.key == K_DOWN or event.key == ord('s'):
+                    moveDown = False
+                
+                if event.key == K_SPACE:
+                    shoot = False
+
+        # dodanie nowych zombie (jesli to potrzebne) do glownego obrazu
+        zombieAddCounter += 1
+        if zombieAddCounter == ADDNEWKINDZOMBIE:
+            zombieAddCounter = 0
+            zombieSize = ZOMBIESIZE       
+            newZombie = {'rect': pygame.Rect(WINDOWWIDTH, random.randint(10,WINDOWHEIGHT-zombieSize-10), zombieSize, zombieSize),
+                        'surface':pygame.transform.scale(zombieImage, (zombieSize, zombieSize)),
+                        }
+
+            zombies.append(newZombie)
+
+        # dodanie nowych - newKindZombies do g³ownego obrazu, jeœli jest to potrzebne
+        newKindZombieAddCounter += 1
+        if newKindZombieAddCounter == ADDNEWZOMBIERATE:
+            newKindZombieAddCounter = 0
+            newKindZombiesize = ZOMBIESIZE
+            newCrawler = {'rect': pygame.Rect(WINDOWWIDTH, random.randint(10,WINDOWHEIGHT-newKindZombiesize-10), newKindZombiesize, newKindZombiesize),
+                        'surface':pygame.transform.scale(newKindZombieImage, (newKindZombiesize, newKindZombiesize)),
+                        }
+            newKindZombies.append(newCrawler)
+
+        # dodanie nowej amunicji
+        bulletAddCounter += 1
+        if bulletAddCounter >= ADDNEWBULLETRATE and shoot == True:
+            bulletAddCounter = 0
+            newBullet = {'rect':pygame.Rect(playerRect.centerx+10, playerRect.centery-25, bulletRect.width, bulletRect.height),
+						 'surface':pygame.transform.scale(bulletImage, (bulletRect.width, bulletRect.height)),
+						}
+            bullets.append(newBullet)
+
+        # okrêcanie gracza.
+        if moveUp and playerRect.top > 30:
+            playerRect.move_ip(0,-1 * PLAYERMOVERATE)
+        if moveDown and playerRect.bottom < WINDOWHEIGHT-10:
+            playerRect.move_ip(0,PLAYERMOVERATE)
+
+        # poruszanie zombie na dole ekranu.
+        for z in zombies:
+            z['rect'].move_ip(-1*NORMALZOMBIESPEED, 0)
+
+        # poruszanie newKindZombies na dole ekranu.
+        for c in newKindZombies:
+            c['rect'].move_ip(-1*NEWKINDZOMBIESPEED,0)
+
+        # ruch amunicji.
+        for b in bullets:
+            b['rect'].move_ip(1 * BULLETSPEED, 0)
+
+        # usuniêcie zombie, którzy zgineli.
+        for z in zombies[:]:
+            if z['rect'].left < 0:
+                zombies.remove(z)
+                zombiesGottenPast += 1
+
+        # usuniêcie newKindZombies jeœli zgineli.
+        for c in newKindZombies[:]:
+            if c['rect'].left <0:
+                newKindZombies.remove(c)
+                zombiesGottenPast += 1
+		
+		for b in bullets[:]:
+			if b['rect'].right>WINDOWWIDTH:
+				bullets.remove(b)
+				
+        # zmiana naboi po trafieniu w zoombie.
+        for z in zombies:
+            if bulletHasHitZombie(bullets, zombies):
+                score += 1
+                zombies.remove(z)
+    
+        for c in newKindZombies:
+            if bulletHasHitCrawler(bullets, newKindZombies):
+                score += 1
+                newKindZombies.remove(c)      
+
+        # stwórz obraz gry w oknie.
+        windowSurface.blit(rescaledBackground, (0, 0))
+
+        # panel gracza.
+        windowSurface.blit(playerImage, playerRect)
+
+        # stworzenie "czarnego charakteru"
+        for z in zombies:
+            windowSurface.blit(z['surface'], z['rect'])
+
+        for c in newKindZombies:
+            windowSurface.blit(c['surface'], c['rect'])
+
+        # ka¿dy rodzaj naboju.
+        for b in bullets:
+            windowSurface.blit(b['surface'], b['rect'])
+
+        # stworzenie wyniku oraz iloœci poleg³ych zoombie
+        drawText('Zoombie, z którymi siê upora³eœ: %s' % (zombiesGottenPast), font, windowSurface, 10, 20)
+        drawText('Wynik: %s' % (score), font, windowSurface, 10, 50)
+
+        # aktualizacje
+        pygame.display.update()
+            
+        # zmiana jeœli jakiœ zombie zostanie uderzony przez gracza.
+        if playerHasHitZombie(playerRect, zombies):
+            break
+        if playerHasHitZombie(playerRect, newKindZombies):
+           break
+        
+        # sprawdzenie kiedy wynik jest zerowy MAXGOTTENPASS co oznacza koniec gry
+        if zombiesGottenPast >= MAXGOTTENPASS:
+            break
+
+        mainClock.tick(FPS)
+
+    # stop gry i ukazanie napisalu Game Over.
+    pygame.mixer.music.stop()
+    gameOverSound.play()
+    time.sleep(1)
+    if zombiesGottenPast >= MAXGOTTENPASS:
+        windowSurface.blit(rescaledBackground, (0, 0))
+        windowSurface.blit(playerImage, (WINDOWWIDTH / 2, WINDOWHEIGHT - 70))
+        drawText('Wynik: %s' % (score), font, windowSurface, 10, 30)
+        drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
+        drawText('ODNIOSLES KLESKE, ZOSTALES ZNISZCZONY!', font, windowSurface, (WINDOWWIDTH / 4)- 80, (WINDOWHEIGHT / 3) + 100)
+        drawText('Wcisnij Enter, jesli chcesz grac dalej lub Escape, jesli sie poddajesz!', font, windowSurface, (WINDOWWIDTH / 4) - 80, (WINDOWHEIGHT / 3) + 150)
+        pygame.display.update()
+        waitForPlayerToPressKey()
+    if playerHasHitZombie(playerRect, zombies):
+        windowSurface.blit(rescaledBackground, (0, 0))
+        windowSurface.blit(playerImage, (WINDOWWIDTH / 2, WINDOWHEIGHT - 70))
+        drawText('Wynik: %s' % (score), font, windowSurface, 10, 30)
+        drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
+        drawText('ZOSTALES UKASZONY PRZEZ ZOOMBIE', font, windowSurface, (WINDOWWIDTH / 4) - 80, (WINDOWHEIGHT / 3) +100)
+        drawText('Wcisnij Enter, jesli chcesz grac dalej lub Escape, jesli sie poddajesz!', font, windowSurface, (WINDOWWIDTH / 4) - 80, (WINDOWHEIGHT / 3) + 150)
+        pygame.display.update()
+        waitForPlayerToPressKey()
+    gameOverSound.stop()
