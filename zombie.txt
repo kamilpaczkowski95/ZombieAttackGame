@@ -216,6 +216,11 @@ while True:
             break
         if playerHasHitZombie(playerRect, newKindZombies):
            break
+	 # sprawdzenie kiedy wynik jest zerowy MAXGOTTENPASS co oznacza koniec gry
+        if zombiesGottenPast >= MAXGOTTENPASS:
+            break
+
+        mainClock.tick(FPS)
 #####################
  # stop gry i ukazanie napisalu Game Over.
     pygame.mixer.music.stop()
