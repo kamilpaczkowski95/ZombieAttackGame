@@ -210,6 +210,12 @@ while True:
 
         # aktualizacje
         pygame.display.update()
+	
+	# zmiana jeśli jakiś zombie zostanie uderzony przez gracza.
+        if playerHasHitZombie(playerRect, zombies):
+            break
+        if playerHasHitZombie(playerRect, newKindZombies):
+           break
 #####################
  # stop gry i ukazanie napisalu Game Over.
     pygame.mixer.music.stop()
